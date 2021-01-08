@@ -1,0 +1,84 @@
+{
+    "tasks": [
+        {
+            "label": "mkbuild",
+            "type": "shell",
+            "command": "mkdir",
+            "args": [
+                "-p",
+                "build"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "problemMatcher": "$msCompile",
+        },
+        {
+            "label": "cmake",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-DCMAKE_BUILD_TYPE=${input:CMAKE_BUILD_TYPE}",
+                "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", // 生成compile_commands.json 供c/c++扩展提示使用
+                "../"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build",
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": "$msCompile",
+            "dependsOn": [
+                "mkbuild"
+            ]
+        },
+
+        {
+            "label": "build",
+            "group": "build",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "./",
+                "--target",
+                "all",
+                "--"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build",
+            },
+            "problemMatcher":"$gcc",
+            "dependsOn":"cmake"
+        }, 
+    ],
+    "inputs": [
+        {
+            "id": "CMAKE_BUILD_TYPE",
+            "type": "pickString",
+            "description": "What CMAKE_BUILD_TYPE do you want to create?",
+            "options": [
+                "Debug",
+                "Release",
+                "RelWithDebInfo",
+                "MinSizeRel",
+            ],
+            "default": "Debug"
+        },
+        
+    ],
+    "version": "2.0.0"
+}
