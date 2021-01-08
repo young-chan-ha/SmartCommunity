@@ -25,7 +25,8 @@
             "command": "cmake",
             "args": [
                 "-DCMAKE_BUILD_TYPE=${input:CMAKE_BUILD_TYPE}",
-                "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON", // 生成compile_commands.json 供c/c++扩展提示使用
+                //"-DCMAKE_BUILD_TYPE=${Debug}",
+              
                 "../"
             ],
             "options": {
@@ -38,7 +39,7 @@
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": true,
-                "clear": true
+                "clear": false
             },
             "problemMatcher": "$msCompile",
             "dependsOn": [
