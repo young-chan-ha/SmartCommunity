@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2021-01-08 03:36:25
- * @LastEditTime: 2021-01-08 21:29:22
+ * @LastEditTime: 2021-01-11 11:16:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /SmartCommunity/main.c
@@ -10,6 +10,7 @@
 #include "Module/rgb_led/rgb_led.h"
 #include "Module/i2c_lcd1602/i2c_lcd1602.h"
 #include "Module/humiture/humiture.h"
+#include "Module/relay/relay.h"
 
 #include <wiringPi.h>
 #include <time.h>
@@ -24,6 +25,8 @@ int initialize()
 
     lcd_init();
     led_init(23, 22, 21);
+    relay_init(7);
+
     return 0;
 }
 
@@ -65,6 +68,19 @@ int main()
         p = gmtime(&timep);
         sprintf(date, "%d/%d     %d:%d:%d", 1 + p->tm_mon, p->tm_mday, 8 + p->tm_hour, p->tm_min, p->tm_sec);
         lcd_write(0, 1, date);
+
+    
+        char cmd = getchar();
+        switch (cmd)
+        {
+        case '1':
+            relay_on();
+            break;
+        case '0':
+            relay_off();
+        default:
+            break;
+        }
     }
 
     return 0;

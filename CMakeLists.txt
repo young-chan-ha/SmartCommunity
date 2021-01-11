@@ -12,6 +12,7 @@ add_subdirectory(Module/i2c_lcd1602)
 
 add_subdirectory(Module/humiture)
 
+add_subdirectory(Module/relay)
 
 
 add_executable(${PROJECT_NAME} ${SRC_FILE})
@@ -19,6 +20,7 @@ add_executable(${PROJECT_NAME} ${SRC_FILE})
 target_link_libraries(${PROJECT_NAME} 
 rgb_led
 i2c_lcd1602
-humiture)
+humiture
+relay)
 
 
